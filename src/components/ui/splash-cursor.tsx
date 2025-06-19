@@ -59,22 +59,22 @@ export function SplashCursor({
       const dy = cursorRef.current.y - cursorRef.current.lastY;
       const speed = Math.sqrt(dx * dx + dy * dy);
 
-      // Create particles based on movement speed
-      if (speed > 5) {
-        const particleCount = Math.min(Math.floor(speed / 2), 5);
+      // Create particles based on movement speed - lower threshold and more particles
+      if (speed > 2) {
+        const particleCount = Math.min(Math.floor(speed), 10);
         
         for (let i = 0; i < particleCount; i++) {
           const angle = Math.random() * Math.PI * 2;
-          const distance = Math.random() * size * 0.5;
+          const distance = Math.random() * size * 0.8;
           
           particlesRef.current.push({
             x: cursorRef.current.x + Math.cos(angle) * distance,
             y: cursorRef.current.y + Math.sin(angle) * distance,
-            size: size * (0.5 + Math.random() * 0.5),
-            speedX: dx * (0.2 + Math.random() * 0.3),
-            speedY: dy * (0.2 + Math.random() * 0.3),
+            size: size * (0.7 + Math.random() * 0.5),
+            speedX: dx * (0.3 + Math.random() * 0.4),
+            speedY: dy * (0.3 + Math.random() * 0.4),
             life: 0,
-            maxLife: 20 + Math.random() * 40,
+            maxLife: 30 + Math.random() * 50,
           });
         }
       }
@@ -154,7 +154,7 @@ export function SplashCursor({
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-50"
+      className="absolute inset-0 w-full h-full pointer-events-none z-[100]"
       style={{ opacity }}
     />
   );
