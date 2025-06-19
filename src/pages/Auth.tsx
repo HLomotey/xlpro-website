@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Chrome, User, Mail, Lock, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const demoAccounts = [
   { role: 'Admin', email: 'admin@xlpro.com', color: 'bg-gradient-to-r from-purple-500 to-blue-600' },
@@ -15,10 +15,10 @@ const demoAccounts = [
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
     setIsLoading(true);
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
       console.log('Google sign-in initiated');
@@ -27,6 +27,11 @@ const Auth = () => {
 
   const handleDemoLogin = (account: any) => {
     console.log('Demo login:', account);
+    if (account.role === 'Admin') {
+      navigate('/admin');
+    } else {
+      navigate('/');
+    }
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -34,6 +39,7 @@ const Auth = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
+      navigate('/admin');
     }, 1000);
   };
 
@@ -92,6 +98,7 @@ const Auth = () => {
                         type="email" 
                         placeholder="Email"
                         className="glass-subtle pl-10"
+                        defaultValue="admin@xlpro.com"
                         required
                       />
                     </div>
@@ -103,6 +110,7 @@ const Auth = () => {
                         type="password" 
                         placeholder="Password"
                         className="glass-subtle pl-10"
+                        defaultValue="password123"
                         required
                       />
                     </div>
