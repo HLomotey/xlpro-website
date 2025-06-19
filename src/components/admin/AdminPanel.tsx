@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Settings, 
@@ -206,7 +205,7 @@ const AdminPanel = () => {
     </div>
   );
 
-  const renderContent = () => (
+  const renderContentManagement = () => (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold gradient-text">Content Management</h2>
       
@@ -287,7 +286,7 @@ const AdminPanel = () => {
       case 'users':
         return renderUsers();
       case 'content':
-        return renderContent();
+        return renderContentManagement();
       default:
         return (
           <div className="flex items-center justify-center h-64">
