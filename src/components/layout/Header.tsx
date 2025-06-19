@@ -1,34 +1,32 @@
-
-import React, { useState } from 'react';
-import { Menu, X, Search, User, ChevronDown, Play, Eye } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Menu, X, Search, User, ChevronDown, Play, Eye } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import ModulePreview from '@/components/modules/ModulePreview';
+} from "@/components/ui/dropdown-menu";
+// Module navigation is now handled through routes
 
 const modules = [
-  { id: 'accounting', name: 'Accounting & Finance', icon: '📊' },
-  { id: 'inventory', name: 'Inventory Management', icon: '📦' },
-  { id: 'crm', name: 'CRM System', icon: '👥' },
-  { id: 'fleet', name: 'Fleet Management', icon: '🚚' },
-  { id: 'analytics', name: 'Analytics Dashboard', icon: '📈' },
-  { id: 'hr', name: 'HR Management', icon: '👨‍💼' },
-  { id: 'payroll', name: 'Payroll Management', icon: '💰' },
-  { id: 'hospital', name: 'Hospital Management', icon: '🏥' },
+  { id: "accounting", name: "Accounting & Finance", icon: "📊" },
+  { id: "inventory", name: "Inventory Management", icon: "📦" },
+  { id: "crm", name: "CRM System", icon: "👥" },
+  { id: "fleet", name: "Fleet Management", icon: "🚚" },
+  { id: "analytics", name: "Analytics Dashboard", icon: "📈" },
+  { id: "hr", name: "HR Management", icon: "👨‍💼" },
+  { id: "payroll", name: "Payroll Management", icon: "💰" },
+  { id: "hospital", name: "Hospital Management", icon: "🏥" },
 ];
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selectedModule, setSelectedModule] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleModuleSelect = (moduleId: string) => {
-    setSelectedModule(moduleId);
+    navigate(`/modules/${moduleId}`);
   };
 
   return (
@@ -46,20 +44,26 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              <Link to="/features" className="text-foreground/80 hover:text-foreground transition-colors">
+              <Link
+                to="/features"
+                className="text-foreground/80 hover:text-foreground transition-colors"
+              >
                 Features
               </Link>
-              
+
               {/* Modules Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="text-foreground/80 hover:text-foreground transition-colors">
+                  <Button
+                    variant="ghost"
+                    className="text-foreground/80 hover:text-foreground transition-colors"
+                  >
                     Modules <ChevronDown className="ml-1 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56 glass-strong border border-white/20">
                   {modules.map((module) => (
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       key={module.id}
                       className="flex items-center space-x-3 cursor-pointer hover:bg-white/10"
                       onClick={() => handleModuleSelect(module.id)}
@@ -77,10 +81,16 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <Link to="/pricing" className="text-foreground/80 hover:text-foreground transition-colors">
+              <Link
+                to="/pricing"
+                className="text-foreground/80 hover:text-foreground transition-colors"
+              >
                 Pricing
               </Link>
-              <Link to="/contact" className="text-foreground/80 hover:text-foreground transition-colors">
+              <Link
+                to="/contact"
+                className="text-foreground/80 hover:text-foreground transition-colors"
+              >
                 Contact
               </Link>
             </nav>
@@ -90,17 +100,14 @@ const Header = () => {
               <Button variant="ghost" size="icon" className="glass-subtle">
                 <Search className="h-4 w-4" />
               </Button>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="btn-glass"
-                onClick={() => navigate('/auth')}
+                onClick={() => navigate("/auth")}
               >
                 Sign In
               </Button>
-              <Button 
-                className="btn-primary"
-                onClick={() => navigate('/auth')}
-              >
+              <Button className="btn-primary" onClick={() => navigate("/auth")}>
                 Get Started
               </Button>
             </div>
@@ -112,7 +119,11 @@ const Header = () => {
               className="md:hidden glass-subtle"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
 
@@ -120,22 +131,29 @@ const Header = () => {
           {isMenuOpen && (
             <div className="md:hidden mt-4 glass-card p-6 animate-fade-in">
               <nav className="flex flex-col space-y-4 mb-6">
-                <Link 
-                  to="/features" 
+                <Link
+                  to="/features"
                   className="text-foreground/80 hover:text-foreground transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Features
                 </Link>
-                <Link 
-                  to="/pricing" 
+                <Link
+                  to="/futuristic-hero"
+                  className="text-foreground/80 hover:text-foreground transition-colors py-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  3D Hero
+                </Link>
+                <Link
+                  to="/pricing"
                   className="text-foreground/80 hover:text-foreground transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Pricing
                 </Link>
-                <Link 
-                  to="/contact" 
+                <Link
+                  to="/contact"
                   className="text-foreground/80 hover:text-foreground transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -143,17 +161,17 @@ const Header = () => {
                 </Link>
               </nav>
               <div className="flex flex-col space-y-3">
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   className="btn-glass justify-start"
-                  onClick={() => navigate('/auth')}
+                  onClick={() => navigate("/auth")}
                 >
                   <User className="h-4 w-4 mr-2" />
                   Sign In
                 </Button>
-                <Button 
+                <Button
                   className="btn-primary justify-start"
-                  onClick={() => navigate('/auth')}
+                  onClick={() => navigate("/auth")}
                 >
                   Get Started
                 </Button>
@@ -163,13 +181,7 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Module Preview Modal */}
-      {selectedModule && (
-        <ModulePreview 
-          moduleId={selectedModule} 
-          onClose={() => setSelectedModule(null)} 
-        />
-      )}
+      {/* Module details are now shown on a separate page */}
     </>
   );
 };
