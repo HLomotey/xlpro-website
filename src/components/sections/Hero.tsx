@@ -2,10 +2,28 @@
 import React from 'react';
 import { ArrowRight, Play, Zap, Shield, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import TypingText from '@/components/ui/typing-text';
 
 const Hero = () => {
+  const typingTexts = [
+    'Enterprise Solutions',
+    'Business Automation',
+    'Digital Transformation',
+    'Operational Excellence'
+  ];
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+      {/* Background Image Overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80"
+          alt="Business technology"
+          className="w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/50 via-purple-900/50 to-black/70"></div>
+      </div>
+
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
@@ -21,9 +39,15 @@ const Hero = () => {
             <span className="text-sm font-medium">Powering Enterprise Excellence</span>
           </div>
 
-          {/* Main Heading */}
+          {/* Main Heading with Typing Effect */}
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <span className="gradient-text">Enterprise Solutions</span>
+            <TypingText 
+              texts={typingTexts}
+              className="gradient-text"
+              speed={120}
+              deleteSpeed={80}
+              delayBetweenTexts={2500}
+            />
             <br />
             <span className="text-foreground">Reimagined</span>
           </h1>
