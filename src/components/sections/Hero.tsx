@@ -2,6 +2,7 @@ import { HeroGeometric } from "@/components/ui/shape-landing-hero";
 import Header from "@/components/layout/Header";
 import { ThreeScene } from "@/components/ThreeScene";
 import { FloatingModules } from "@/components/ui/floating-modules";
+import { SplashCursor } from "@/components/ui/splash-cursor";
 
 export function Hero() {
   const descriptions = [
@@ -15,6 +16,7 @@ export function Hero() {
     <>
       <Header />
       <div className="relative min-h-screen">
+        <SplashCursor color="rgba(99, 102, 241, 0.6)" size={20} opacity={0.8} />
         <HeroGeometric
           badge="Enterprise Solutions"
           title1="Transform Your"
