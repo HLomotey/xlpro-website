@@ -136,7 +136,7 @@ const ModuleSidebar: React.FC<ModuleSidebarProps> = ({ moduleId, activeTab, onTa
         <ul className="space-y-2">
           {config.items.map((item) => {
             const Icon = item.icon;
-            const is Active = activeTab === item.id;
+            const isActive = activeTab === item.id;
             
             return (
               <li key={item.id}>
