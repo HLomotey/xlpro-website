@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Menu, X, Search, User, ChevronDown, Play, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +25,7 @@ const modules = [
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleModuleSelect = (moduleId: string) => {
     setSelectedModule(moduleId);
@@ -35,18 +37,18 @@ const Header = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold">X</span>
               </div>
               <span className="text-xl font-bold gradient-text">xlPro</span>
-            </div>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">
+              <Link to="/features" className="text-foreground/80 hover:text-foreground transition-colors">
                 Features
-              </a>
+              </Link>
               
               {/* Modules Dropdown */}
               <DropdownMenu>
@@ -75,12 +77,12 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <a href="#pricing" className="text-foreground/80 hover:text-foreground transition-colors">
+              <Link to="/pricing" className="text-foreground/80 hover:text-foreground transition-colors">
                 Pricing
-              </a>
-              <a href="#contact" className="text-foreground/80 hover:text-foreground transition-colors">
+              </Link>
+              <Link to="/contact" className="text-foreground/80 hover:text-foreground transition-colors">
                 Contact
-              </a>
+              </Link>
             </nav>
 
             {/* Actions */}
@@ -88,10 +90,17 @@ const Header = () => {
               <Button variant="ghost" size="icon" className="glass-subtle">
                 <Search className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" className="btn-glass">
+              <Button 
+                variant="ghost" 
+                className="btn-glass"
+                onClick={() => navigate('/auth')}
+              >
                 Sign In
               </Button>
-              <Button className="btn-primary">
+              <Button 
+                className="btn-primary"
+                onClick={() => navigate('/auth')}
+              >
                 Get Started
               </Button>
             </div>
@@ -111,41 +120,41 @@ const Header = () => {
           {isMenuOpen && (
             <div className="md:hidden mt-4 glass-card p-6 animate-fade-in">
               <nav className="flex flex-col space-y-4 mb-6">
-                <a 
-                  href="#features" 
+                <Link 
+                  to="/features" 
                   className="text-foreground/80 hover:text-foreground transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Features
-                </a>
-                <a 
-                  href="#modules" 
-                  className="text-foreground/80 hover:text-foreground transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Modules
-                </a>
-                <a 
-                  href="#pricing" 
+                </Link>
+                <Link 
+                  to="/pricing" 
                   className="text-foreground/80 hover:text-foreground transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Pricing
-                </a>
-                <a 
-                  href="#contact" 
+                </Link>
+                <Link 
+                  to="/contact" 
                   className="text-foreground/80 hover:text-foreground transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
-                </a>
+                </Link>
               </nav>
               <div className="flex flex-col space-y-3">
-                <Button variant="ghost" className="btn-glass justify-start">
+                <Button 
+                  variant="ghost" 
+                  className="btn-glass justify-start"
+                  onClick={() => navigate('/auth')}
+                >
                   <User className="h-4 w-4 mr-2" />
                   Sign In
                 </Button>
-                <Button className="btn-primary justify-start">
+                <Button 
+                  className="btn-primary justify-start"
+                  onClick={() => navigate('/auth')}
+                >
                   Get Started
                 </Button>
               </div>
