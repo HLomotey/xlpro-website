@@ -67,8 +67,6 @@ function ElegantShape({
 
 function HeroGeometric({
   badge = "Enterprise Solutions",
-  title1 = "Transform Your",
-  title2 = "Business Operations",
   descriptions = [
     "Comprehensive enterprise modules for accounting, inventory, CRM, fleet management, and more in one integrated platform.",
     "Streamline operations with our intelligent business solutions designed for scalability, compliance, and maximum efficiency.",
@@ -76,12 +74,80 @@ function HeroGeometric({
     "Enterprise-grade security and performance across all modules with seamless integration capabilities.",
   ],
 }) {
-  const [currentDescriptionIndex, setCurrentDescriptionIndex] = useState(0);
+  const titlePairs = [
+    { title1: "Transform Your", title2: "Business Operations" },
+    { title1: "Streamline Your", title2: "Enterprise Workflow" },
+    { title1: "Elevate Your", title2: "Business Efficiency" },
+    { title1: "Modernize Your", title2: "Digital Infrastructure" },
+    { title1: "Optimize Your", title2: "Business Processes" },
+  ];
 
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+  const [currentDescriptionIndex, setCurrentDescriptionIndex] = useState(0);
+  const [displayedTitle1, setDisplayedTitle1] = useState("");
+  const [displayedTitle2, setDisplayedTitle2] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Handle title typing animation
+  useEffect(() => {
+    const currentTitle = titlePairs[currentTitleIndex];
+    
+    if (isDeleting) {
+      // Deleting text
+      if (displayedTitle2.length > 0) {
+        // Delete second line first
+        const timeoutId = setTimeout(() => {
+          setDisplayedTitle2(displayedTitle2.slice(0, -1));
+        }, 50);
+        return () => clearTimeout(timeoutId);
+      } else if (displayedTitle1.length > 0) {
+        // Then delete first line
+        const timeoutId = setTimeout(() => {
+          setDisplayedTitle1(displayedTitle1.slice(0, -1));
+        }, 50);
+        return () => clearTimeout(timeoutId);
+      } else {
+        // When both lines are deleted, move to next title and start typing
+        setIsDeleting(false);
+        setCurrentTitleIndex((prev) => (prev + 1) % titlePairs.length);
+      }
+    } else if (isTyping) {
+      // Typing text
+      if (displayedTitle1.length < currentTitle.title1.length) {
+        // Type first line
+        const timeoutId = setTimeout(() => {
+          setDisplayedTitle1(currentTitle.title1.slice(0, displayedTitle1.length + 1));
+        }, 100);
+        return () => clearTimeout(timeoutId);
+      } else if (displayedTitle2.length < currentTitle.title2.length) {
+        // Then type second line
+        const timeoutId = setTimeout(() => {
+          setDisplayedTitle2(currentTitle.title2.slice(0, displayedTitle2.length + 1));
+        }, 100);
+        return () => clearTimeout(timeoutId);
+      } else {
+        // When both lines are typed, pause before deleting
+        setIsTyping(false);
+        const timeoutId = setTimeout(() => {
+          setIsDeleting(true);
+        }, 3000); // Wait 3 seconds before starting to delete
+        return () => clearTimeout(timeoutId);
+      }
+    } else {
+      // If neither typing nor deleting, start typing again after a pause
+      const timeoutId = setTimeout(() => {
+        setIsTyping(true);
+      }, 500); // Short pause before starting to type again
+      return () => clearTimeout(timeoutId);
+    }
+  }, [currentTitleIndex, displayedTitle1, displayedTitle2, isDeleting, isTyping, titlePairs]);
+
+  // Handle description changes
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDescriptionIndex((prev) => (prev + 1) % descriptions.length);
-    }, 7000); // Change description every 5 seconds
+    }, 7000); // Change description every 7 seconds
 
     return () => clearInterval(interval);
   }, [descriptions.length]);
@@ -175,7 +241,8 @@ function HeroGeometric({
           >
             <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
               <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
-                {title1}
+                {displayedTitle1}
+                <span className="animate-pulse">|</span>
               </span>
               <br />
               <span
@@ -183,7 +250,8 @@ function HeroGeometric({
                   "bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300"
                 )}
               >
-                {title2}
+                {displayedTitle2}
+                <span className="animate-pulse">|</span>
               </span>
             </h1>
           </motion.div>
