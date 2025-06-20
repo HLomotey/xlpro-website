@@ -1,6 +1,12 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, animate, easeOut } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  easeOut,
+} from "framer-motion";
 import { Circle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -78,7 +84,10 @@ function HeroGeometric({
 }) {
   // Define multiple title pairs to cycle through
   const titlePairs = [
-    { title1: title1 || "Transform Your", title2: title2 || "Business Operations" },
+    {
+      title1: title1 || "Transform Your",
+      title2: title2 || "Business Operations",
+    },
     { title1: "Streamline Your", title2: "Enterprise Workflow" },
     { title1: "Elevate Your", title2: "Business Efficiency" },
     { title1: "Modernize Your", title2: "Digital Infrastructure" },
@@ -94,16 +103,16 @@ function HeroGeometric({
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(50);
-  
+
   // Typing animation logic - completely rewritten for reliability
   useEffect(() => {
     // Create a single string from the current title pair for easier handling
     const currentTitle = titlePairs[currentPhraseIndex];
     const fullPhrase = `${currentTitle.title1} ${currentTitle.title2}`;
-    
+
     // Set typing speed based on whether we're typing or deleting
     const speed = isDeleting ? typingSpeed / 2 : typingSpeed;
-    
+
     // Create the timeout for typing/deleting animation
     const timeout = setTimeout(() => {
       if (!isDeleting) {
@@ -115,13 +124,15 @@ function HeroGeometric({
           // If we've completed typing, pause before deleting
           setTimeout(() => {
             setIsDeleting(true);
-          }, 2000);
+          }, 5000);
         }
       } else {
         // DELETING MODE
         if (displayedText.length > 0) {
           // If we still have text to delete, remove one character
-          setDisplayedText(displayedText.substring(0, displayedText.length - 1));
+          setDisplayedText(
+            displayedText.substring(0, displayedText.length - 1)
+          );
         } else {
           // If we've deleted everything, move to the next phrase
           setIsDeleting(false);
@@ -131,7 +142,7 @@ function HeroGeometric({
         }
       }
     }, speed);
-    
+
     // Clean up timeout on unmount or when dependencies change
     return () => clearTimeout(timeout);
   }, [displayedText, isDeleting, currentPhraseIndex, titlePairs, typingSpeed]);
@@ -144,23 +155,28 @@ function HeroGeometric({
 
     return () => clearInterval(interval);
   }, [descriptions.length]);
-  
+
   // Split the displayed text back into title1 and title2 for rendering
   const currentTitle = titlePairs[currentPhraseIndex];
   const title1Length = currentTitle.title1.length;
-  const displayedTitle1 = displayedText.substring(0, Math.min(displayedText.length, title1Length));
-  const displayedTitle2 = displayedText.length > title1Length ? 
-    displayedText.substring(title1Length + 1) : ""; // +1 to account for the space
+  const displayedTitle1 = displayedText.substring(
+    0,
+    Math.min(displayedText.length, title1Length)
+  );
+  const displayedTitle2 =
+    displayedText.length > title1Length
+      ? displayedText.substring(title1Length + 1)
+      : ""; // +1 to account for the space
 
   const fadeUpVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 }
+    visible: { opacity: 1, y: 0 },
   };
-  
+
   const getTransition = (index: number) => ({
     duration: 1,
     delay: 0.5 + index * 0.2,
-    ease: easeOut
+    ease: easeOut,
   });
 
   const textFadeVariants = {
