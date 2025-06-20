@@ -28,9 +28,9 @@ const ModuleDetails = () => {
     <>
       <Header />
       
-      <main className="pt-24 pb-16">
-        <div className="container mx-auto px-4">
-          <div className="glass-strong rounded-2xl overflow-hidden mb-8 shadow-lg">
+      <main className="pt-24 pb-16 w-full">
+        <div className="w-full px-6">
+          <div className="glass-strong rounded-2xl overflow-hidden mb-8 shadow-lg w-full">
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">
               <div>
@@ -97,41 +97,93 @@ const ModuleDetails = () => {
             </div>
           </div>
           
-          {/* Additional module information */}
-          <div className="glass-card p-6 rounded-xl mb-8">
-            <h2 className="text-2xl font-bold mb-4">About {module.name}</h2>
-            <p className="mb-4">
-              The {module.name} module provides comprehensive tools designed to streamline your business operations.
-              With an intuitive interface and powerful features, it helps you manage all aspects of your {module.name.toLowerCase()} processes efficiently.
-            </p>
-            <p className="mb-4">
-              This module integrates seamlessly with other xlPro modules, allowing for a unified workflow across your entire organization.
-              Data flows automatically between modules, eliminating manual data entry and reducing errors.
-            </p>
-            
-            <h3 className="text-xl font-semibold mt-6 mb-3">Technical Specifications</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Real-time data processing and analytics</li>
-              <li>Cloud-based storage with secure encryption</li>
-              <li>Mobile-responsive interface for on-the-go access</li>
-              <li>Customizable dashboards and reports</li>
-              <li>API integration capabilities with third-party services</li>
-            </ul>
-            
-            <div className="mt-8">
-              <Button 
-                className="btn-primary mr-4"
-                onClick={() => navigate('/pricing')}
-              >
-                Get Started
-              </Button>
-              <Button 
-                variant="outline" 
-                className="btn-glass"
-                onClick={() => navigate('/contact')}
-              >
-                Request Demo
-              </Button>
+          {/* Two-column layout for additional information and form */}
+          <div className="flex flex-col lg:flex-row gap-8 w-full">
+            {/* Left column: About section */}
+            <div className="glass-card p-6 rounded-xl mb-8 lg:mb-0 lg:w-1/2">
+              <h2 className="text-2xl font-bold mb-4">About {module.name}</h2>
+              <p className="mb-4">
+                The {module.name} module provides comprehensive tools designed to streamline your business operations.
+                With an intuitive interface and powerful features, it helps you manage all aspects of your {module.name.toLowerCase()} processes efficiently.
+              </p>
+              <p className="mb-4">
+                This module integrates seamlessly with other xlPro modules, allowing for a unified workflow across your entire organization.
+                Data flows automatically between modules, eliminating manual data entry and reducing errors.
+              </p>
+              
+              <h3 className="text-xl font-semibold mt-6 mb-3">Technical Specifications</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Real-time data processing and analytics</li>
+                <li>Cloud-based storage with secure encryption</li>
+                <li>Mobile-responsive interface for on-the-go access</li>
+                <li>Customizable dashboards and reports</li>
+                <li>API integration capabilities with third-party services</li>
+              </ul>
+            </div>
+
+            {/* Right column: Request form */}
+            <div className="glass-card p-6 rounded-xl lg:w-1/2">
+              <h2 className="text-2xl font-bold mb-4">Request Information</h2>
+              <form className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">First Name</label>
+                    <input 
+                      type="text" 
+                      className="w-full p-2 rounded-md bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Last Name</label>
+                    <input 
+                      type="text" 
+                      className="w-full p-2 rounded-md bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-1">Email</label>
+                  <input 
+                    type="email" 
+                    className="w-full p-2 rounded-md bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-1">Company</label>
+                  <input 
+                    type="text" 
+                    className="w-full p-2 rounded-md bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium mb-1">Message</label>
+                  <textarea 
+                    rows={4} 
+                    className="w-full p-2 rounded-md bg-white/5 border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary"
+                    placeholder={`I'm interested in learning more about the ${module.name} module...`}
+                  />
+                </div>
+                
+                <div className="flex space-x-4">
+                  <Button 
+                    className="btn-primary"
+                    type="submit"
+                  >
+                    Submit Request
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="btn-glass"
+                    onClick={() => navigate('/pricing')}
+                    type="button"
+                  >
+                    View Pricing
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
