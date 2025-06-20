@@ -18,13 +18,13 @@ export function Hero() {
       <div className="relative min-h-screen overflow-hidden">
         <div className="relative w-full h-full">
           <SplashCursor color="rgba(99, 102, 241, 0.8)" size={25} opacity={1.0} />
+          <FloatingModules />
           <HeroGeometric
             badge="Enterprise Solutions"
             title1="Transform Your"
             title2="Business Operations"
             descriptions={descriptions}
           />
-          <FloatingModules />
           <div className="absolute top-0 right-0 w-1/4 h-full pointer-events-none">
             <div className="floating w-full h-full">
               <ThreeScene />

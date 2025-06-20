@@ -13,6 +13,7 @@ import Admin from "./pages/Admin";
 import Modules from "./pages/Modules";
 import NotFound from "./pages/NotFound";
 import ModuleDetails from "./pages/ModuleDetails";
+import BundlePricing from "./pages/BundlePricing";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/features" element={<Features />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/bundle-pricing" element={<BundlePricing />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/modules" element={<Modules />} />
           <Route path="/modules/:moduleId" element={<ModuleDetails />} />
