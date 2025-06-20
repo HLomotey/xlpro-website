@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import { ThreeScene } from "@/components/ThreeScene";
 import { FloatingModules } from "@/components/ui/floating-modules";
 import { SplashCursor } from "@/components/ui/splash-cursor";
+import FluidGradientAnimation from "@/components/ui/fluid-animation";
 
 export function Hero() {
   const descriptions = [
@@ -17,6 +18,7 @@ export function Hero() {
       <Header />
       <div className="relative min-h-screen overflow-hidden">
         <div className="relative w-full h-full">
+          <FluidGradientAnimation />
           <SplashCursor color="rgba(99, 102, 241, 0.8)" size={25} opacity={1.0} />
           <FloatingModules />
           <HeroGeometric
