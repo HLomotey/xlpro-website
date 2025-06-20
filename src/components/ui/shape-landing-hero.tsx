@@ -67,6 +67,8 @@ function ElegantShape({
 
 function HeroGeometric({
   badge = "Enterprise Solutions",
+  title1,
+  title2,
   descriptions = [
     "Comprehensive enterprise modules for accounting, inventory, CRM, fleet management, and more in one integrated platform.",
     "Streamline operations with our intelligent business solutions designed for scalability, compliance, and maximum efficiency.",
@@ -74,74 +76,65 @@ function HeroGeometric({
     "Enterprise-grade security and performance across all modules with seamless integration capabilities.",
   ],
 }) {
+  // Define multiple title pairs to cycle through
   const titlePairs = [
-    { title1: "Transform Your", title2: "Business Operations" },
+    { title1: title1 || "Transform Your", title2: title2 || "Business Operations" },
     { title1: "Streamline Your", title2: "Enterprise Workflow" },
     { title1: "Elevate Your", title2: "Business Efficiency" },
     { title1: "Modernize Your", title2: "Digital Infrastructure" },
     { title1: "Optimize Your", title2: "Business Processes" },
+    { title1: "Accelerate Your", title2: "Digital Transformation" },
+    { title1: "Empower Your", title2: "Team's Productivity" },
+    { title1: "Revolutionize Your", title2: "Business Analytics" },
   ];
 
-  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+  // Animation state
   const [currentDescriptionIndex, setCurrentDescriptionIndex] = useState(0);
-  const [displayedTitle1, setDisplayedTitle1] = useState("");
-  const [displayedTitle2, setDisplayedTitle2] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
+  const [displayedText, setDisplayedText] = useState("");
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  // Handle title typing animation
+  const [typingSpeed, setTypingSpeed] = useState(50);
+  
+  // Typing animation logic - completely rewritten for reliability
   useEffect(() => {
-    const currentTitle = titlePairs[currentTitleIndex];
+    // Create a single string from the current title pair for easier handling
+    const currentTitle = titlePairs[currentPhraseIndex];
+    const fullPhrase = `${currentTitle.title1} ${currentTitle.title2}`;
     
-    if (isDeleting) {
-      // Deleting text
-      if (displayedTitle2.length > 0) {
-        // Delete second line first
-        const timeoutId = setTimeout(() => {
-          setDisplayedTitle2(displayedTitle2.slice(0, -1));
-        }, 50);
-        return () => clearTimeout(timeoutId);
-      } else if (displayedTitle1.length > 0) {
-        // Then delete first line
-        const timeoutId = setTimeout(() => {
-          setDisplayedTitle1(displayedTitle1.slice(0, -1));
-        }, 50);
-        return () => clearTimeout(timeoutId);
+    // Set typing speed based on whether we're typing or deleting
+    const speed = isDeleting ? typingSpeed / 2 : typingSpeed;
+    
+    // Create the timeout for typing/deleting animation
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        // TYPING MODE
+        // If we haven't completed the full phrase yet, add one character
+        if (displayedText.length < fullPhrase.length) {
+          setDisplayedText(fullPhrase.substring(0, displayedText.length + 1));
+        } else {
+          // If we've completed typing, pause before deleting
+          setTimeout(() => {
+            setIsDeleting(true);
+          }, 2000);
+        }
       } else {
-        // When both lines are deleted, move to next title and start typing
-        setIsDeleting(false);
-        setCurrentTitleIndex((prev) => (prev + 1) % titlePairs.length);
+        // DELETING MODE
+        if (displayedText.length > 0) {
+          // If we still have text to delete, remove one character
+          setDisplayedText(displayedText.substring(0, displayedText.length - 1));
+        } else {
+          // If we've deleted everything, move to the next phrase
+          setIsDeleting(false);
+          setCurrentPhraseIndex((currentPhraseIndex + 1) % titlePairs.length);
+          // Randomize typing speed slightly for more natural effect
+          setTypingSpeed(Math.floor(Math.random() * 30) + 40);
+        }
       }
-    } else if (isTyping) {
-      // Typing text
-      if (displayedTitle1.length < currentTitle.title1.length) {
-        // Type first line
-        const timeoutId = setTimeout(() => {
-          setDisplayedTitle1(currentTitle.title1.slice(0, displayedTitle1.length + 1));
-        }, 100);
-        return () => clearTimeout(timeoutId);
-      } else if (displayedTitle2.length < currentTitle.title2.length) {
-        // Then type second line
-        const timeoutId = setTimeout(() => {
-          setDisplayedTitle2(currentTitle.title2.slice(0, displayedTitle2.length + 1));
-        }, 100);
-        return () => clearTimeout(timeoutId);
-      } else {
-        // When both lines are typed, pause before deleting
-        setIsTyping(false);
-        const timeoutId = setTimeout(() => {
-          setIsDeleting(true);
-        }, 3000); // Wait 3 seconds before starting to delete
-        return () => clearTimeout(timeoutId);
-      }
-    } else {
-      // If neither typing nor deleting, start typing again after a pause
-      const timeoutId = setTimeout(() => {
-        setIsTyping(true);
-      }, 500); // Short pause before starting to type again
-      return () => clearTimeout(timeoutId);
-    }
-  }, [currentTitleIndex, displayedTitle1, displayedTitle2, isDeleting, isTyping, titlePairs]);
+    }, speed);
+    
+    // Clean up timeout on unmount or when dependencies change
+    return () => clearTimeout(timeout);
+  }, [displayedText, isDeleting, currentPhraseIndex, titlePairs, typingSpeed]);
 
   // Handle description changes
   useEffect(() => {
@@ -151,6 +144,13 @@ function HeroGeometric({
 
     return () => clearInterval(interval);
   }, [descriptions.length]);
+  
+  // Split the displayed text back into title1 and title2 for rendering
+  const currentTitle = titlePairs[currentPhraseIndex];
+  const title1Length = currentTitle.title1.length;
+  const displayedTitle1 = displayedText.substring(0, Math.min(displayedText.length, title1Length));
+  const displayedTitle2 = displayedText.length > title1Length ? 
+    displayedText.substring(title1Length + 1) : ""; // +1 to account for the space
 
   const fadeUpVariants = {
     hidden: { opacity: 0, y: 30 },
